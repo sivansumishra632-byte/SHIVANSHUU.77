@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHREE JI FAST FOOD</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+body{
+    background:#fff8f0;
+    color:#333;
+}
+
+/* Welcome Screen */
+#welcome{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:linear-gradient(135deg,#ff7b00,#ffb347);
+    color:white;
+}
+
+#welcome h1{
+    font-size:2rem;
+    margin-bottom:10px;
+}
+
+.btn{
+    margin-top:20px;
+    padding:14px 28px;
+    border:none;
+    border-radius:30px;
+    background:white;
+    color:#ff6a00;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* Menu */
+#menu{
+    display:none;
+    padding:20px;
+    animation:slideUp 0.8s ease;
+}
+
+@keyframes slideUp{
+    from{
+        opacity:0;
+        transform:translateY(50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header h1{
+    color:#ff6a00;
+}
+
+.card{
+    background:white;
+    margin-bottom:15px;
+    padding:15px;
+    border-radius:15px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    border-bottom:1px dashed #ddd;
+}
+
+.item:last-child{
+    border:none;
+}
+
+.footer{
+    text-align:center;
+    margin-top:20px;
+    color:#666;
+}
+</style>
+</head>
+
+<body>
+
+<div id="welcome">
+    <h1>🍔 SHREE JI FAST FOOD 🍜</h1>
+    <p>Fresh Taste • Best Quality</p>
+    <button class="btn" onclick="openMenu()">View Menu</button>
+</div>
+
+<div id="menu">
+    <div class="header">
+        <h1>SHREE JI FAST FOOD</h1>
+        <p>Our Menu</p>
+    </div>
+
+    <div class="card">
+        <h2>Chinese & Snacks</h2>
+        <div class="item"><span>Chowmein</span><span>₹30 / ₹60</span></div>
+        <div class="item"><span>Fried Rice</span><span>₹30 / ₹60</span></div>
+        <div class="item"><span>French Fries</span><span>₹30 / ₹60</span></div>
+        <div class="item"><span>Momos</span><span>₹30 / ₹60</span></div>
+        <div class="item"><span>Spring Roll</span><span>₹25</span></div>
+    </div>
+
+    <div class="card">
+        <h2>Burgers</h2>
+        <div class="item"><span>Burger</span><span>₹30</span></div>
+        <div class="item"><span>Paneer Burger</span><span>₹50</span></div>
+    </div>
+
+    <div class="card">
+        <h2>South Indian</h2>
+        <div class="item"><span>Dosa</span><span>₹50</span></div>
+        <div class="item"><span>Masala Dosa</span><span>₹70</span></div>
+        <div class="item"><span>Paneer Dosa</span><span>₹90</span></div>
+    </div>
+
+    <div class="card">
+        <h2>Special Items</h2>
+        <div class="item"><span>Pav Bhaji</span><span>₹50</span></div>
+        <div class="item"><span>Chilli Paneer</span><span>₹90 / ₹170</span></div>
+        <div class="item"><span>Chilli Potato</span><span>₹70 / ₹130</span></div>
+    </div>
+
+    <div class="footer">
+        ❤️ Thank You For Visiting
+    </div>
+</div>
+
+<script>
+function openMenu(){
+    document.getElementById("welcome").style.display="none";
+    document.getElementById("menu").style.display="block";
+}
+</script>
+
+</body>
+</html>
