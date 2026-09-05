@@ -2,7 +2,206 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SHREE JI FAST FOOD</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+margin:0;
+padding:15px;
+}
+
+.header{
+text-align:center;
+background:#ff6b00;
+color:white;
+padding:20px;
+border-radius:15px;
+margin-bottom:15px;
+}
+
+.card{
+background:white;
+padding:15px;
+margin-bottom:12px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+button{
+background:#ff6b00;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.cart{
+background:white;
+padding:15px;
+border-radius:15px;
+margin-top:20px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+.order-btn{
+width:100%;
+padding:14px;
+font-size:18px;
+background:#25D366;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>🍔 SHREE JI FAST FOOD</h1>
+<p>Order Direct on WhatsApp</p>
+</div>
+
+<div id="menu"></div>
+
+<div class="cart">
+<h2>🛒 Your Cart</h2>
+
+<div id="cartItems">No items added</div>
+
+<h3 id="total">Total: ₹0</h3>
+
+<input type="text" id="customerName" placeholder="Your Name">
+
+<button class="order-btn" onclick="sendOrder()">
+📱 Order on WhatsApp
+</button>
+</div>
+
+<script>
+
+const whatsappNumber="916386476348";
+
+const menu=[
+{name:"Chowmein",price:30},
+{name:"Fried Rice",price:30},
+{name:"French Fries",price:30},
+{name:"Momos",price:30},
+{name:"Spring Roll",price:25},
+{name:"Burger",price:30},
+{name:"Paneer Burger",price:50},
+{name:"Dosa",price:50},
+{name:"Masala Dosa",price:70},
+{name:"Paneer Dosa",price:90},
+{name:"Pav Bhaji",price:50},
+{name:"Chilli Paneer",price:90},
+{name:"Chilli Potato",price:70}
+];
+
+let cart=[];
+
+const menuDiv=document.getElementById("menu");
+
+menu.forEach(item=>{
+menuDiv.innerHTML+=`
+<div class="card">
+<div>
+<b>${item.name}</b><br>
+₹${item.price}
+</div>
+<button onclick="addToCart('${item.name}',${item.price})">
+➕ Add
+</button>
+</div>`;
+});
+
+function addToCart(name,price){
+
+const found=cart.find(x=>x.name===name);
+
+if(found){
+found.qty++;
+}else{
+cart.push({name,price,qty:1});
+}
+
+updateCart();
+}
+
+function updateCart(){
+
+let html="";
+let total=0;
+
+cart.forEach(item=>{
+
+total+=item.price*item.qty;
+
+html+=`
+<div>
+${item.name} x ${item.qty}
+= ₹${item.price*item.qty}
+</div>`;
+});
+
+document.getElementById("cartItems").innerHTML=
+html || "No items added";
+
+document.getElementById("total").innerHTML=
+"Total: ₹"+total;
+}
+
+function sendOrder(){
+
+if(cart.length===0){
+alert("Please add items first");
+return;
+}
+
+const customer=
+document.getElementById("customerName").value || "Customer";
+
+let total=0;
+
+let message=
+"🍔 SHREE JI FAST FOOD ORDER%0A%0A";
+
+cart.forEach(item=>{
+
+total+=item.price*item.qty;
+
+message+=`${item.name} x ${item.qty} = ₹${item.price*item.qty}%0A`;
+
+});
+
+message+=`%0A💰 Total: ₹${total}%0A`;
+message+=`👤 Name: ${customer}`;
+
+window.open(
+`https://wa.me/${whatsappNumber}?text=${message}`,
+"_blank"
+);
+
+}
+</script>
+
+</body>
+</html><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SHREE JI FAST FOOD</title>
 
 <style>
