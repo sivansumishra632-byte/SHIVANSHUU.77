@@ -1,48 +1,113 @@
-
-];<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SHREE JI FAST FOOD</title>
 
 <style>
-body{
-font-family:Arial,sans-serif;
-background:#f5f5f5;
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+}
+
+#welcomeScreen{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff6b00,#ff9800);
+color:white;
+text-align:center;
+padding:20px;
+}
+
+.welcome-box{
+animation:fadeIn 1s ease;
+}
+
+.welcome-box h1{
+font-size:35px;
+margin-bottom:10px;
+}
+
+.welcome-box p{
+font-size:18px;
+margin-bottom:25px;
+}
+
+.view-btn{
+background:white;
+color:#ff6b00;
+border:none;
+padding:15px 30px;
+font-size:18px;
+font-weight:bold;
+border-radius:50px;
+cursor:pointer;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+50%{
+transform:scale(1.08);
+}
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+#menuPage{
+display:none;
 padding:15px;
 }
 
 .header{
-text-align:center;
-background:#ff6b00;
+background:linear-gradient(135deg,#ff6b00,#ff9800);
 color:white;
 padding:20px;
 border-radius:15px;
+text-align:center;
 margin-bottom:15px;
+}
+
+.header h1{
+font-size:28px;
 }
 
 .card{
 background:white;
 padding:15px;
-margin-bottom:12px;
 border-radius:12px;
+margin-bottom:12px;
 box-shadow:0 2px 8px rgba(0,0,0,.08);
-display:flex;
-justify-content:space-between;
-align-items:center;
 }
 
-button{
+.item-title{
+font-size:18px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.btn{
 background:#ff6b00;
 color:white;
 border:none;
-padding:8px 14px;
+padding:10px 15px;
 border-radius:8px;
 cursor:pointer;
 }
@@ -55,63 +120,152 @@ margin-top:20px;
 box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
+.cart h2{
+margin-bottom:10px;
+}
+
+.cart-item{
+padding:6px 0;
+border-bottom:1px dashed #ddd;
+}
+
+.total{
+font-size:20px;
+font-weight:bold;
+margin-top:10px;
+}
+
 input{
 width:100%;
-padding:10px;
-margin:10px 0;
+padding:12px;
+margin-top:10px;
 border:1px solid #ddd;
 border-radius:8px;
 }
 
 .order-btn{
 width:100%;
-padding:14px;
-font-size:18px;
+margin-top:15px;
 background:#25D366;
+color:white;
+border:none;
+padding:15px;
+font-size:18px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.footer{
+text-align:center;
+padding:20px;
+color:#666;
 }
 </style>
 </head>
 <body>
 
+<div id="welcomeScreen">
+
+<div class="welcome-box">
+
+<h1>🍔 SHREE JI FAST FOOD</h1>
+
+<p>Fresh Taste • Best Quality</p>
+
+<button class="view-btn" onclick="openMenu()">
+📖 TAP TO VIEW MENU
+</button>
+
+</div>
+
+</div>
+
+<div id="menuPage">
+
 <div class="header">
 <h1>🍔 SHREE JI FAST FOOD</h1>
-<p>Order Direct on WhatsApp</p>
+<p>Order Direct On WhatsApp</p>
 </div>
 
 <div id="menu"></div>
 
 <div class="cart">
+
 <h2>🛒 Your Cart</h2>
 
-<div id="cartItems">No items added</div>
+<div id="cartItems">
+No items added
+</div>
 
-<h3 id="total">Total: ₹0</h3>
+<div class="total" id="total">
+Total: ₹0
+</div>
 
-<input type="text" id="customerName" placeholder="Your Name">
+<input
+type="text"
+id="customerName"
+placeholder="Enter Your Name">
 
-<button class="order-btn" onclick="sendOrder()">
-📱 Order on WhatsApp
+<button
+class="order-btn"
+onclick="sendOrder()">
+📱 Order On WhatsApp
 </button>
+
+</div>
+
+<div class="footer">
+❤️ Thank You For Visiting ❤️
+</div>
+
 </div>
 
 <script>
 
-const whatsappNumber="916386476348";
+const whatsappNumber = "916386476348";
 
-const menu=[
-{name:"Chowmein",price:30/60},
-{name:"Fried Rice",price:30/60},
-{name:"French Fries",price:30/60},
-{name:"Momos",price:30/60},
+function openMenu(){
+
+document.getElementById("welcomeScreen").style.display="none";
+
+document.getElementById("menuPage").style.display="block";
+
+}
+
+const menu = [
+
+{name:"Chowmein (Half)",price:30},
+{name:"Chowmein (Full)",price:60},
+
+{name:"Fried Rice (Half)",price:30},
+{name:"Fried Rice (Full)",price:60},
+
+{name:"French Fries (Half)",price:30},
+{name:"French Fries (Full)",price:60},
+
+{name:"Momos (Half)",price:30},
+{name:"Momos (Full)",price:60},
+
 {name:"Spring Roll",price:25},
+
 {name:"Burger",price:30},
+
 {name:"Paneer Burger",price:50},
+
 {name:"Dosa",price:50},
+
 {name:"Masala Dosa",price:70},
+
 {name:"Paneer Dosa",price:90},
+
 {name:"Pav Bhaji",price:50},
-{name:"Chilli Paneer",price:90/170},
-{name:"Chilli Potato",price:70/130}
+
+{name:"Chilli Paneer (Half)",price:90},
+{name:"Chilli Paneer (Full)",price:170},
+
+{name:"Chilli Potato (Half)",price:70},
+{name:"Chilli Potato (Full)",price:130}
+
 ];
 
 let cart=[];
@@ -119,29 +273,50 @@ let cart=[];
 const menuDiv=document.getElementById("menu");
 
 menu.forEach(item=>{
+
 menuDiv.innerHTML+=`
+
 <div class="card">
-<div>
-<b>${item.name}</b><br>
-₹${item.price}
+
+<div class="item-title">
+${item.name}
 </div>
-<button onclick="addToCart('${item.name}',${item.price})">
-➕ Add
+
+<button
+class="btn"
+onclick="addToCart('${item.name}',${item.price})">
+
+➕ Add ₹${item.price}
+
 </button>
-</div>`;
+
+</div>
+
+`;
+
 });
 
 function addToCart(name,price){
 
-const found=cart.find(x=>x.name===name);
+const existing=
+cart.find(item=>item.name===name);
 
-if(found){
-found.qty++;
+if(existing){
+
+existing.qty++;
+
 }else{
-cart.push({name,price,qty:1});
+
+cart.push({
+name:name,
+price:price,
+qty:1
+});
+
 }
 
 updateCart();
+
 }
 
 function updateCart(){
@@ -154,10 +329,17 @@ cart.forEach(item=>{
 total+=item.price*item.qty;
 
 html+=`
-<div>
-${item.name} x ${item.qty}
-= ₹${item.price*item.qty}
-</div>`;
+
+<div class="cart-item">
+
+${item.name}
+ x ${item.qty}
+ = ₹${item.price*item.qty}
+
+</div>
+
+`;
+
 });
 
 document.getElementById("cartItems").innerHTML=
@@ -165,17 +347,27 @@ html || "No items added";
 
 document.getElementById("total").innerHTML=
 "Total: ₹"+total;
+
 }
 
 function sendOrder(){
 
 if(cart.length===0){
+
 alert("Please add items first");
+
 return;
+
 }
 
-const customer=
-document.getElementById("customerName").value || "Customer";
+let customer=
+document.getElementById("customerName").value;
+
+if(customer.trim()===""){
+
+customer="Customer";
+
+}
 
 let total=0;
 
@@ -186,172 +378,31 @@ cart.forEach(item=>{
 
 total+=item.price*item.qty;
 
-message+=`${item.name} x ${item.qty} = ₹${item.price*item.qty}%0A`;
+message+=
+item.name+
+" x "+
+item.qty+
+" = ₹"+
+(item.price*item.qty)+
+"%0A";
 
 });
 
-message+=`%0A💰 Total: ₹${total}%0A`;
-message+=`👤 Name: ${customer}`;
+message+=
+"%0A💰 Total: ₹"+
+total+
+"%0A";
+
+message+=
+"👤 Name: "+
+customer;
 
 window.open(
-`https://wa.me/${whatsappNumber}?text=${message}`,
+"https://wa.me/"+whatsappNumber+
+"?text="+message,
 "_blank"
 );
 
-}
-</script>
-
-</body>
-</html><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHREE JI FAST FOOD</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-body{
-    background:#fff8f0;
-    color:#333;
-}
-
-/* Welcome Screen */
-#welcome{
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    background:linear-gradient(135deg,#ff7b00,#ffb347);
-    color:white;
-}
-
-#welcome h1{
-    font-size:2rem;
-    margin-bottom:10px;
-}
-
-.btn{
-    margin-top:20px;
-    padding:14px 28px;
-    border:none;
-    border-radius:30px;
-    background:white;
-    color:#ff6a00;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-/* Menu */
-#menu{
-    display:none;
-    padding:20px;
-    animation:slideUp 0.8s ease;
-}
-
-@keyframes slideUp{
-    from{
-        opacity:0;
-        transform:translateY(50px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-.header{
-    text-align:center;
-    margin-bottom:20px;
-}
-
-.header h1{
-    color:#ff6a00;
-}
-
-.card{
-    background:white;
-    margin-bottom:15px;
-    padding:15px;
-    border-radius:15px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
-
-.item{
-    display:flex;
-    justify-content:space-between;
-    padding:8px 0;
-    border-bottom:1px dashed #ddd;
-}
-
-.item:last-child{
-    border:none;
-}
-
-.footer{
-    text-align:center;
-    margin-top:20px;
-    color:#666;
-}
-</style>
-</head>
-
-<body>
-
-<div id="welcome">
-    <h1>🍔 SHREE JI FAST FOOD 🍜</h1>
-    <p>Fresh Taste • Best Quality</p>
-    <button class="btn" onclick="openMenu()">View Menu</button>
-</div>
-
-<div id="menu">
-    <div class="header">
-        <h1>SHREE JI FAST FOOD</h1>
-        <p>Our Menu</p>
-    </div>
-
-    <div class="card">
-        <h2>Chinese & Snacks</h2>
-        <div class="item"><span>Chowmein</span><span>₹30 / ₹60</span></div>
-        <div class="item"><span>Fried Rice</span><span>₹30 / ₹60</span></div>
-        <div class="item"><span>French Fries</span><span>₹30 / ₹60</span></div>
-        <div class="item"><span>Momos</span><span>₹30 / ₹60</span></div>
-        <div class="item"><span>Spring Roll</span><span>₹25</span></div>
-    </div>
-
-    <div class="card">
-        <h2>Burgers</h2>
-        <div class="item"><span>Burger</span><span>₹30</span></div>
-        <div class="item"><span>Paneer Burger</span><span>₹50</span></div>
-    </div>
-
-    <div class="card">
-        <h2>South Indian</h2>
-        <div class="item"><span>Dosa</span><span>₹50</span></div>
-        <div class="item"><span>Masala Dosa</span><span>₹70</span></div>
-        <div class="item"><span>Paneer Dosa</span><span>₹90</span></div>
-    </div>
-
-    <div class="card">
-        <h2>Special Items</h2>
-        <div class="item"><span>Pav Bhaji</span><span>₹50</span></div>
-        <div class="item"><span>Chilli Paneer</span><span>₹90 / ₹170</span></div>
-        <div class="item"><span>Chilli Potato</span><span>₹70 / ₹130</span></div>
-    </div>
-
-    <div class="footer">
-        ❤️ Thank You For Visiting
-    </div>
-</div>
-
-<script>
-function openMenu(){
-    document.getElementById("welcome").style.display="none";
-    document.getElementById("menu").style.display="block";
 }
 </script>
 
