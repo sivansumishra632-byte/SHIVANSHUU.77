@@ -407,4 +407,413 @@ window.open(
 </script>
 
 </body>
-</html>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHREE JI FAST FOOD</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+}
+
+#welcomeScreen{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff6b00,#ff9800);
+color:white;
+text-align:center;
+padding:20px;
+}
+
+.welcome-box{
+animation:fadeIn 1s ease;
+}
+
+.welcome-box h1{
+font-size:35px;
+margin-bottom:10px;
+}
+
+.welcome-box p{
+font-size:18px;
+margin-bottom:25px;
+}
+
+.view-btn{
+background:white;
+color:#ff6b00;
+border:none;
+padding:15px 30px;
+font-size:18px;
+font-weight:bold;
+border-radius:50px;
+cursor:pointer;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+50%{
+transform:scale(1.08);
+}
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+#menuPage{
+display:none;
+padding:15px;
+}
+
+.header{
+background:linear-gradient(135deg,#ff6b00,#ff9800);
+color:white;
+padding:20px;
+border-radius:15px;
+text-align:center;
+margin-bottom:15px;
+}
+
+.header h1{
+font-size:28px;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:12px;
+margin-bottom:12px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.item-title{
+font-size:18px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.btn{
+background:#ff6b00;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.cart{
+background:white;
+padding:15px;
+border-radius:15px;
+margin-top:20px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.cart h2{
+margin-bottom:10px;
+}
+
+.cart-item{
+padding:6px 0;
+border-bottom:1px dashed #ddd;
+}
+
+.total{
+font-size:20px;
+font-weight:bold;
+margin-top:10px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+.order-btn{
+width:100%;
+margin-top:15px;
+background:#25D366;
+color:white;
+border:none;
+padding:15px;
+font-size:18px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.footer{
+text-align:center;
+padding:20px;
+color:#666;
+}
+</style>
+</head>
+<body>
+
+<div id="welcomeScreen">
+
+<div class="welcome-box">
+
+<h1>🍔 SHREE JI FAST FOOD</h1>
+
+<p>Fresh Taste • Best Quality</p>
+
+<button class="view-btn" onclick="openMenu()">
+📖 TAP TO VIEW MENU
+</button>
+
+</div>
+
+</div>
+
+<div id="menuPage">
+
+<div class="header">
+<h1>🍔 SHREE JI FAST FOOD</h1>
+<p>Order Direct On WhatsApp</p>
+</div>
+
+<div id="menu"></div>
+
+<div class="cart">
+
+<h2>🛒 Your Cart</h2>
+
+<div id="cartItems">
+No items added
+</div>
+
+<div class="total" id="total">
+Total: ₹0
+</div>
+
+<input
+type="text"
+id="customerName"
+placeholder="Enter Your Name">
+
+<button
+class="order-btn"
+onclick="sendOrder()">
+📱 Order On WhatsApp
+</button>
+
+</div>
+
+<div class="footer">
+❤️ Thank You For Visiting ❤️
+</div>
+
+</div>
+
+<script>
+
+const whatsappNumber = "916386476348";
+
+function openMenu(){
+
+document.getElementById("welcomeScreen").style.display="none";
+
+document.getElementById("menuPage").style.display="block";
+
+}
+
+const menu = [
+
+{name:"Chowmein (Half)",price:30},
+{name:"Chowmein (Full)",price:60},
+
+{name:"Fried Rice (Half)",price:30},
+{name:"Fried Rice (Full)",price:60},
+
+{name:"French Fries (Half)",price:30},
+{name:"French Fries (Full)",price:60},
+
+{name:"Momos (Half)",price:30},
+{name:"Momos (Full)",price:60},
+
+{name:"Spring Roll",price:25},
+
+{name:"Burger",price:30},
+
+{name:"Paneer Burger",price:50},
+
+{name:"Dosa",price:50},
+
+{name:"Masala Dosa",price:70},
+
+{name:"Paneer Dosa",price:90},
+
+{name:"Pav Bhaji",price:50},
+
+{name:"Chilli Paneer (Half)",price:90},
+{name:"Chilli Paneer (Full)",price:170},
+
+{name:"Chilli Potato (Half)",price:70},
+{name:"Chilli Potato (Full)",price:130}
+
+];
+
+let cart=[];
+
+const menuDiv=document.getElementById("menu");
+
+menu.forEach(item=>{
+
+menuDiv.innerHTML+=`
+
+<div class="card">
+
+<div class="item-title">
+${item.name}
+</div>
+
+<button
+class="btn"
+onclick="addToCart('${item.name}',${item.price})">
+
+➕ Add ₹${item.price}
+
+</button>
+
+</div>
+
+`;
+
+});
+
+function addToCart(name,price){
+
+const existing=
+cart.find(item=>item.name===name);
+
+if(existing){
+
+existing.qty++;
+
+}else{
+
+cart.push({
+name:name,
+price:price,
+qty:1
+});
+
+}
+
+updateCart();
+
+}
+
+function updateCart(){
+
+let html="";
+let total=0;
+
+cart.forEach(item=>{
+
+total+=item.price*item.qty;
+
+html+=`
+
+<div class="cart-item">
+
+${item.name}
+ x ${item.qty}
+ = ₹${item.price*item.qty}
+
+</div>
+
+`;
+
+});
+
+document.getElementById("cartItems").innerHTML=
+html || "No items added";
+
+document.getElementById("total").innerHTML=
+"Total: ₹"+total;
+
+}
+
+function sendOrder(){
+
+if(cart.length===0){
+
+alert("Please add items first");
+
+return;
+
+}
+
+let customer=
+document.getElementById("customerName").value;
+
+if(customer.trim()===""){
+
+customer="Customer";
+
+}
+
+let total=0;
+
+let message=
+"🍔 SHREE JI FAST FOOD ORDER%0A%0A";
+
+cart.forEach(item=>{
+
+total+=item.price*item.qty;
+
+message+=
+item.name+
+" x "+
+item.qty+
+" = ₹"+
+(item.price*item.qty)+
+"%0A";
+
+});
+
+message+=
+"%0A💰 Total: ₹"+
+total+
+"%0A";
+
+message+=
+"👤 Name: "+
+customer;
+
+window.open(
+"https://wa.me/"+whatsappNumber+
+"?text="+message,
+"_blank"
+);
+
+}
+</script>
+
+</body>
+ </html>
