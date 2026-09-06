@@ -754,4 +754,33 @@ ${item.name}
 document.getElementById("cartItems").innerHTML=
 html || "No items added";
 
-document.getElementByI
+document.getElementByIfunction changeQty(name,price,index,value){
+
+const item = cart.find(x=>x.name===name);
+
+item.qty += value;
+
+if(item.qty <= 0){
+
+cart = cart.filter(x=>x.name!==name);
+
+document.getElementById(`card-${index}`).innerHTML = `
+<div class="item-title">${name}</div>
+
+<button
+class="btn"
+onclick="addToCart('${name}',${price},${index})">
+➕ Add ₹${price}
+</button>
+`;
+
+}else{
+
+document.querySelector(
+`#card-${index} .qty-count`
+).innerText = item.qty;
+
+}
+
+updateCart();
+ }
