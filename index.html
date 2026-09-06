@@ -1,95 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SHREE JI FAST FOOD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHREE JI FAST FOOD - Online Order</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
-body{background:#f4f4f4}
-.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;background:linear-gradient(135deg,#ff6b00,#ff9800)}
-.hero button{padding:14px 28px;border:none;border-radius:30px;font-weight:700}
-#app{display:none;padding:14px}
-.header{background:linear-gradient(135deg,#ff6b00,#ff9800);color:#fff;padding:20px;border-radius:18px;text-align:center}
-.search{width:100%;padding:12px;margin:12px 0;border-radius:10px;border:1px solid #ddd}
-.card{background:#fff;margin:10px 0;padding:14px;border-radius:14px;box-shadow:0 4px 10px rgba(0,0,0,.08);display:flex;justify-content:space-between;align-items:center;transition:.25s}
-.card:hover{transform:translateY(-2px)}
-.btn,.qty button{background:#ff6b00;color:#fff;border:none;border-radius:8px;padding:9px 12px;cursor:pointer}
-.qty{display:flex;gap:8px;align-items:center}
-.cart{background:#fff;padding:15px;border-radius:15px;margin-top:15px}
-input{width:100%;padding:12px;margin-top:8px;border:1px solid #ddd;border-radius:10px}
-.order{width:100%;padding:14px;margin-top:10px;background:#25D366;color:#fff;border:none;border-radius:10px}
-.badge{position:fixed;top:10px;right:10px;background:#ff6b00;color:#fff;padding:10px 14px;border-radius:30px;font-weight:700}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+body{background:#f8f9fa;color:#333;padding-bottom:30px}
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;background:linear-gradient(135deg,#ff5722,#ff9800);padding:20px}
+.hero h1{font-size:2.2rem;margin-bottom:8px}
+.hero p{font-size:1.1rem;opacity:0.95}
+.hero button{margin-top:20px;padding:14px 32px;border:none;border-radius:30px;font-weight:700;font-size:1rem;background:#fff;color:#e64a19;cursor:pointer;box-shadow:0 6px 15px rgba(0,0,0,0.2);transition:.2s}
+.hero button:active{transform:scale(0.96)}
+#app{display:none;max-width:500px;margin:0 auto;padding:15px}
+.header{background:linear-gradient(135deg,#ff5722,#ff9800);color:#fff;padding:22px 16px;border-radius:18px;text-align:center;box-shadow:0 6px 16px rgba(255,87,34,0.25)}
+.search{width:100%;padding:13px 15px;margin:15px 0 10px;border-radius:12px;border:1px solid #ddd;font-size:15px;outline:none;background:#fff}
+.search:focus{border-color:#ff5722}
+.card{background:#fff;margin:10px 0;padding:14px;border-radius:14px;box-shadow:0 3px 10px rgba(0,0,0,.06);display:flex;justify-content:space-between;align-items:center}
+.card b{font-size:16px;color:#222}
+.card .price{color:#e64a19;font-weight:700;margin-top:3px}
+.btn,.qty button{background:#ff5722;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer}
+.qty{display:flex;gap:10px;align-items:center}
+.qty button{padding:6px 12px;font-size:16px}
+.cart{background:#fff;padding:18px;border-radius:16px;margin-top:20px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.cart h3{border-bottom:1px solid #eee;padding-bottom:10px;margin-bottom:12px;color:#222}
+#cartItems{line-height:1.7;color:#555;font-size:14px}
+#total{margin:15px 0;color:#e64a19;font-size:22px;font-weight:800}
+input, textarea{width:100%;padding:12px;margin-top:10px;border:1px solid #ddd;border-radius:10px;font-size:14px;outline:none;font-family:inherit}
+input:focus, textarea:focus{border-color:#ff5722}
+.loc-btn{width:100%;padding:12px;margin-top:10px;background:#ff9800;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.loc-btn:active{filter:brightness(0.95)}
+.order{width:100%;padding:15px;margin-top:14px;background:#25D366;color:#fff;border:none;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 6px 16px rgba(37,211,102,0.3)}
+.order:active{transform:scale(0.98)}
+.badge{position:fixed;top:15px;right:15px;background:#ff5722;color:#fff;padding:8px 14px;border-radius:30px;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:99}
 .pop{animation:pop .3s}
 @keyframes pop{50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
+
 <div class="badge">🛒 <span id="count">0</span></div>
 
+<!-- Welcome Hero Screen -->
 <div class="hero" id="welcome">
-<div>
-<h1>🍔 SHREE JI FAST FOOD</h1>
-<p>Fresh Taste • Best Quality</p><br>
-<button onclick="startApp()">VIEW MENU</button>
-</div>
+  <div>
+    <h1>🍔 SHREE JI FAST FOOD</h1>
+    <p>Fresh Taste • Best Quality • Fast Delivery</p>
+    <button onclick="startApp()">VIEW MENU & ORDER</button>
+  </div>
 </div>
 
+<!-- Main App Screen -->
 <div id="app">
-<div class="header"><h1>SHREE JI FAST FOOD</h1><p>Order Direct On WhatsApp</p></div>
-<input class="search" id="search" placeholder="Search Item..." onkeyup="render()">
-<div id="menu"></div>
+  <div class="header">
+    <h2>SHREE JI FAST FOOD</h2>
+    <p>Direct Delivery On WhatsApp</p>
+  </div>
 
-<div class="cart">
-<h3>Your Cart</h3>
-<div id="cartItems">No items added</div>
-<h2 id="total">Total: ₹0</h2>
-<input id="name" placeholder="Customer Name">
-<input id="phone" placeholder="Mobile Number">
-<button class="order" onclick="sendOrder()">Order On WhatsApp</button>
-</div>
+  <input class="search" id="search" placeholder="🔍 Search dishes (Chowmein, Momos, Burger...)" onkeyup="render()">
+  <div id="menu"></div>
+
+  <!-- Cart & Checkout Section -->
+  <div class="cart">
+    <h3>🛍️ Your Cart</h3>
+    <div id="cartItems">No items added yet</div>
+    <h2 id="total">Total: ₹0</h2>
+
+    <input id="name" placeholder="👤 Customer Name">
+    <input id="phone" type="tel" placeholder="📞 Mobile Number">
+    
+    <!-- Delivery Address & Live Location -->
+    <textarea id="address" rows="2" placeholder="🏠 Enter House No., Street, Landmark"></textarea>
+    
+    <button type="button" class="loc-btn" onclick="fetchLiveLocation()">
+      📍 Send Current GPS Location
+    </button>
+    <small id="loc-status" style="display:block;margin-top:5px;color:#666;font-size:12px"></small>
+
+    <button class="order" onclick="sendOrder()">📲 Confirm & Order On WhatsApp</button>
+  </div>
 </div>
 
 <script>
-const whatsapp="916386476348";
-const menuData=[
-["Chowmein (Half)",30],["Chowmein (Full)",60],["Fried Rice (Half)",30],
-["Fried Rice (Full)",60],["French Fries (Half)",30],["French Fries (Full)",60],
-["Momos (Half)",30],["Momos (Full)",60],["Spring Roll",25],["Burger",30],
-["Paneer Burger",50],["Dosa",50],["Masala Dosa",70],["Paneer Dosa",90],
-["Pav Bhaji",50],["Chilli Paneer (Half)",90],["Chilli Paneer (Full)",170],
-["Chilli Potato (Half)",70],["Chilli Potato (Full)",130]
+const whatsapp = "916386476348";
+
+const menuData = [
+  ["Chowmein (Half)", 30], ["Chowmein (Full)", 60],
+  ["Fried Rice (Half)", 30], ["Fried Rice (Full)", 60],
+  ["French Fries (Half)", 30], ["French Fries (Full)", 60],
+  ["Momos (Half)", 30], ["Momos (Full)", 60],
+  ["Spring Roll", 25], ["Burger", 30],
+  ["Paneer Burger", 50], ["Dosa", 50],
+  ["Masala Dosa", 70], ["Paneer Dosa", 90],
+  ["Pav Bhaji", 50], ["Chilli Paneer (Half)", 90],
+  ["Chilli Paneer (Full)", 170], ["Chilli Potato (Half)", 70],
+  ["Chilli Potato (Full)", 130]
 ];
-let cart=[];
-function startApp(){welcome.style.display='none';app.style.display='block';render();}
-function qty(name){return cart.find(x=>x.name===name)?.qty||0}
-function add(name,price){let c=cart.find(x=>x.name===name);if(c)c.qty++;else cart.push({name,price,qty:1});update();}
-function change(name,v){let c=cart.find(x=>x.name===name);if(!c)return;c.qty+=v;if(c.qty<=0)cart=cart.filter(i=>i.name!==name);update();}
+
+let cart = [];
+let googleMapsUrl = "";
+
+function startApp(){
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  render();
+}
+
+function qty(name){
+  return cart.find(x => x.name === name)?.qty || 0;
+}
+
+function add(name, price){
+  let item = cart.find(x => x.name === name);
+  if(item) item.qty++;
+  else cart.push({name, price, qty: 1});
+  update();
+}
+
+function change(name, val){
+  let item = cart.find(x => x.name === name);
+  if(!item) return;
+  item.qty += val;
+  if(item.qty <= 0) cart = cart.filter(i => i.name !== name);
+  update();
+}
+
 function render(){
-let q=search.value?.toLowerCase()||"";
-menu.innerHTML="";
-menuData.filter(i=>i[0].toLowerCase().includes(q)).forEach(i=>{
-let n=i[0],p=i[1],c=qty(n);
-menu.innerHTML+=`<div class="card"><div><b>${n}</b><br>₹${p}</div><div>${c?`<div class='qty'><button onclick="change('${n}',-1)">-</button><b>${c}</b><button onclick="change('${n}',1)">+</button></div>`:`<button class='btn' onclick="add('${n}',${p})">Add</button>`}</div></div>`;
-});
+  let q = document.getElementById('search').value?.toLowerCase() || "";
+  let menuBox = document.getElementById('menu');
+  menuBox.innerHTML = "";
+  
+  menuData.filter(i => i[0].toLowerCase().includes(q)).forEach(i => {
+    let name = i[0], price = i[1], c = qty(name);
+    menuBox.innerHTML += `
+      <div class="card">
+        <div>
+          <b>${name}</b>
+          <div class="price">₹${price}</div>
+        </div>
+        <div>
+          ${c ? `
+            <div class='qty'>
+              <button onclick="change('${name}', -1)">-</button>
+              <b>${c}</b>
+              <button onclick="change('${name}', 1)">+</button>
+            </div>
+          ` : `
+            <button class='btn' onclick="add('${name}', ${price})">+ Add</button>
+          `}
+        </div>
+      </div>
+    `;
+  });
 }
+
 function update(){
-render();
-let t=0,cnt=0,h="";
-cart.forEach(i=>{t+=i.price*i.qty;cnt+=i.qty;h+=`${i.name} x ${i.qty} = ₹${i.price*i.qty}<br>`});
-cartItems.innerHTML=h||"No items added";
-total.innerText="Total: ₹"+t;
-count.innerText=cnt;
-document.querySelector('.badge').classList.add('pop');
-setTimeout(()=>document.querySelector('.badge').classList.remove('pop'),300);
+  render();
+  let total = 0, count = 0, html = "";
+  cart.forEach(i => {
+    let sub = i.price * i.qty;
+    total += sub;
+    count += i.qty;
+    html += `• ${i.name} x ${i.qty} = ₹${sub}<br>`;
+  });
+
+  document.getElementById('cartItems').innerHTML = html || "No items added yet";
+  document.getElementById('total').innerText = "Total: ₹" + total;
+  document.getElementById('count').innerText = count;
+
+  let badge = document.querySelector('.badge');
+  badge.classList.add('pop');
+  setTimeout(() => badge.classList.remove('pop'), 300);
 }
+
+// Live GPS Location
+function fetchLiveLocation(){
+  let status = document.getElementById('loc-status');
+  if(!navigator.geolocation){
+    alert("आपके ब्राउज़र में GPS सपोर्ट नहीं है। कृपया पता मैन्युअली लिखें।");
+    return;
+  }
+  status.innerText = "⏳ लोकेशन खोजी जा रही है, कृपया प्रतीक्षा करें...";
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      let lat = pos.coords.latitude;
+      let lon = pos.coords.longitude;
+      googleMapsUrl = `https://maps.google.com/?q=${lat},${lon}`;
+      status.innerText = "✅ लोकेशन सफलतापूर्वक प्राप्त हुई!";
+      status.style.color = "green";
+      let addrBox = document.getElementById('address');
+      if(!addrBox.value.trim()){
+        addrBox.value = "GPS Location Attached";
+      }
+    },
+    (err) => {
+      status.innerText = "⚠️ लोकेशन नहीं मिल सकी। कृपया मैन्युअल पता टाइप करें।";
+      status.style.color = "red";
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+}
+
+// Order through WhatsApp
 function sendOrder(){
-if(!cart.length){alert('Add items first');return;}
-let msg='🍔 SHREE JI FAST FOOD ORDER%0A%0A';
-let t=0;
-cart.forEach(i=>{t+=i.price*i.qty;msg+=`${i.name} x ${i.qty} = ₹${i.price*i.qty}%0A`;});
-msg+=`%0A💰 Total: ₹${t}%0A👤 ${name.value||'Customer'}%0A📞 ${phone.value||'-'}`;
-open(`https://wa.me/${whatsapp}?text=${msg}`,'_blank');
+  if(!cart.length){
+    alert('कृपया पहले मेनू से कोई आइटम कार्ट में जोड़ें!');
+    return;
+  }
+  let custName = document.getElementById('name').value.trim();
+  let custPhone = document.getElementById('phone').value.trim();
+  let custAddr = document.getElementById('address').value.trim();
+
+  if(!custName){
+    alert('कृपया ग्राहक का नाम दर्ज करें।');
+    return;
+  }
+
+  let msg = `🍔 *SHREE JI FAST FOOD - NEW ORDER*%0A%0A`;
+  let total = 0;
+  cart.forEach(i => {
+    let sub = i.price * i.qty;
+    total += sub;
+    msg += `• ${i.name} x ${i.qty} = ₹${sub}%0A`;
+  });
+
+  msg += `%0A💰 *Grand Total:* ₹${total}%0A`;
+  msg += `👤 *Name:* ${encodeURIComponent(custName)}%0A`;
+  msg += `📞 *Phone:* ${encodeURIComponent(custPhone || 'Not Provided')}%0A`;
+  msg += `🏠 *Address:* ${encodeURIComponent(custAddr || 'Not Provided')}%0A`;
+
+  if(googleMapsUrl){
+    msg += `📍 *Google Maps Location:* ${encodeURIComponent(googleMapsUrl)}%0A`;
+  }
+
+  window.open(`https://wa.me/${whatsapp}?text=${msg}`, '_blank');
 }
 </script>
 </body>
