@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SHREE JI FAST FOOD</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+body{background:#f4f4f4}
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;background:linear-gradient(135deg,#ff6b00,#ff9800)}
+.hero button{padding:14px 28px;border:none;border-radius:30px;font-weight:700}
+#app{display:none;padding:14px}
+.header{background:linear-gradient(135deg,#ff6b00,#ff9800);color:#fff;padding:20px;border-radius:18px;text-align:center}
+.search{width:100%;padding:12px;margin:12px 0;border-radius:10px;border:1px solid #ddd}
+.card{background:#fff;margin:10px 0;padding:14px;border-radius:14px;box-shadow:0 4px 10px rgba(0,0,0,.08);display:flex;justify-content:space-between;align-items:center;transition:.25s}
+.card:hover{transform:translateY(-2px)}
+.btn,.qty button{background:#ff6b00;color:#fff;border:none;border-radius:8px;padding:9px 12px;cursor:pointer}
+.qty{display:flex;gap:8px;align-items:center}
+.cart{background:#fff;padding:15px;border-radius:15px;margin-top:15px}
+input{width:100%;padding:12px;margin-top:8px;border:1px solid #ddd;border-radius:10px}
+.order{width:100%;padding:14px;margin-top:10px;background:#25D366;color:#fff;border:none;border-radius:10px}
+.badge{position:fixed;top:10px;right:10px;background:#ff6b00;color:#fff;padding:10px 14px;border-radius:30px;font-weight:700}
+.pop{animation:pop .3s}
+@keyframes pop{50%{transform:scale(1.2)}}
+</style>
+</head>
+<body>
+<div class="badge">🛒 <span id="count">0</span></div>
+
+<div class="hero" id="welcome">
+<div>
+<h1>🍔 SHREE JI FAST FOOD</h1>
+<p>Fresh Taste • Best Quality</p><br>
+<button onclick="startApp()">VIEW MENU</button>
+</div>
+</div>
+
+<div id="app">
+<div class="header"><h1>SHREE JI FAST FOOD</h1><p>Order Direct On WhatsApp</p></div>
+<input class="search" id="search" placeholder="Search Item..." onkeyup="render()">
+<div id="menu"></div>
+
+<div class="cart">
+<h3>Your Cart</h3>
+<div id="cartItems">No items added</div>
+<h2 id="total">Total: ₹0</h2>
+<input id="name" placeholder="Customer Name">
+<input id="phone" placeholder="Mobile Number">
+<button class="order" onclick="sendOrder()">Order On WhatsApp</button>
+</div>
+</div>
+
+<script>
+const whatsapp="916386476348";
+const menuData=[
+["Chowmein (Half)",30],["Chowmein (Full)",60],["Fried Rice (Half)",30],
+["Fried Rice (Full)",60],["French Fries (Half)",30],["French Fries (Full)",60],
+["Momos (Half)",30],["Momos (Full)",60],["Spring Roll",25],["Burger",30],
+["Paneer Burger",50],["Dosa",50],["Masala Dosa",70],["Paneer Dosa",90],
+["Pav Bhaji",50],["Chilli Paneer (Half)",90],["Chilli Paneer (Full)",170],
+["Chilli Potato (Half)",70],["Chilli Potato (Full)",130]
+];
+let cart=[];
+function startApp(){welcome.style.display='none';app.style.display='block';render();}
+function qty(name){return cart.find(x=>x.name===name)?.qty||0}
+function add(name,price){let c=cart.find(x=>x.name===name);if(c)c.qty++;else cart.push({name,price,qty:1});update();}
+function change(name,v){let c=cart.find(x=>x.name===name);if(!c)return;c.qty+=v;if(c.qty<=0)cart=cart.filter(i=>i.name!==name);update();}
+function render(){
+let q=search.value?.toLowerCase()||"";
+menu.innerHTML="";
+menuData.filter(i=>i[0].toLowerCase().includes(q)).forEach(i=>{
+let n=i[0],p=i[1],c=qty(n);
+menu.innerHTML+=`<div class="card"><div><b>${n}</b><br>₹${p}</div><div>${c?`<div class='qty'><button onclick="change('${n}',-1)">-</button><b>${c}</b><button onclick="change('${n}',1)">+</button></div>`:`<button class='btn' onclick="add('${n}',${p})">Add</button>`}</div></div>`;
+});
+}
+function update(){
+render();
+let t=0,cnt=0,h="";
+cart.forEach(i=>{t+=i.price*i.qty;cnt+=i.qty;h+=`${i.name} x ${i.qty} = ₹${i.price*i.qty}<br>`});
+cartItems.innerHTML=h||"No items added";
+total.innerText="Total: ₹"+t;
+count.innerText=cnt;
+document.querySelector('.badge').classList.add('pop');
+setTimeout(()=>document.querySelector('.badge').classList.remove('pop'),300);
+}
+function sendOrder(){
+if(!cart.length){alert('Add items first');return;}
+let msg='🍔 SHREE JI FAST FOOD ORDER%0A%0A';
+let t=0;
+cart.forEach(i=>{t+=i.price*i.qty;msg+=`${i.name} x ${i.qty} = ₹${i.price*i.qty}%0A`;});
+msg+=`%0A💰 Total: ₹${t}%0A👤 ${name.value||'Customer'}%0A📞 ${phone.value||'-'}`;
+open(`https://wa.me/${whatsapp}?text=${msg}`,'_blank');
+}
+</script>
+</body>
+</html>
