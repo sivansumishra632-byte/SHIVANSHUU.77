@@ -1,40 +1,42 @@
-!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SHREE JI FAST FOOD Billing</title>
+<title>SHREE JI FAST FOOD Billing Pro</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#f5f5f5;padding:15px}
-.container{max-width:700px;margin:auto;background:#fff;padding:15px;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,.1)}
-h1{text-align:center;color:#ff6b00;margin-bottom:15px}
-input,select,button{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:8px;font-size:16px}
-button{background:#ff6b00;color:#fff;border:none;font-weight:bold;cursor:pointer}
-table{width:100%;border-collapse:collapse;margin-top:10px}
+body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0}
+.header{background:#ff6b00;color:#fff;padding:14px;text-align:center;font-size:24px;font-weight:bold}
+.wrap{max-width:1000px;margin:auto;padding:12px}
+.card{background:#fff;border-radius:10px;padding:12px;margin-bottom:12px}
+input,select,button{padding:10px;margin:4px 0}
+select,input{width:100%;box-sizing:border-box}
+button{border:none;border-radius:8px;background:#ff6b00;color:#fff;cursor:pointer}
+table{width:100%;border-collapse:collapse}
 th,td{border:1px solid #ddd;padding:8px;text-align:center}
-.summary{margin-top:15px;font-size:18px;font-weight:bold}
-.dashboard{margin-top:15px;padding:12px;background:#fff3e8;border-radius:10px}
-.billCard{background:#fafafa;padding:10px;margin-top:8px;border-radius:8px;border-left:4px solid #ff6b00}
+.small{width:auto}
 @media print{
 body *{visibility:hidden}
-#printBill,#printBill *{visibility:visible}
-#printBill{position:absolute;left:0;top:0;width:58mm;font-size:12px}
+#receipt,#receipt *{visibility:visible}
+#receipt{position:absolute;left:0;top:0;width:58mm}
 }
 </style>
 </head>
 <body>
-<div class="container">
-<h1>SHREE JI FAST FOOD</h1>
-<input type="text" id="customer" placeholder="Customer Name">
+<div class="header">SHREE JI FAST FOOD - BILLING PRO</div>
+
+<div class="wrap">
+<div class="card">
+<input id="customer" placeholder="Customer Name (Optional)">
+
 <select id="item">
-<option value="30">Chowmein ₹30</option>
+<option value="30">Chowmein Half ₹30</option>
 <option value="60">Chowmein Full ₹60</option>
-<option value="30">Fried Rice ₹30</option>
+<option value="30">Fried Rice Half ₹30</option>
 <option value="60">Fried Rice Full ₹60</option>
-<option value="30">French Fries ₹30</option>
+<option value="30">French Fries Half ₹30</option>
 <option value="60">French Fries Full ₹60</option>
-<option value="30">Momos ₹30</option>
+<option value="30">Momos Half ₹30</option>
 <option value="60">Momos Full ₹60</option>
 <option value="25">Spring Roll ₹25</option>
 <option value="30">Burger ₹30</option>
@@ -48,59 +50,121 @@ body *{visibility:hidden}
 <option value="70">Chilli Potato Half ₹70</option>
 <option value="130">Chilli Potato Full ₹130</option>
 </select>
+
 <input type="number" id="qty" value="1" min="1">
-<button onclick="addItem()">Add Item</button>
-<table><thead><tr><th>Item</th><th>Qty</th><th>Amt</th></tr></thead><tbody id="billBody"></tbody></table>
-<div class="summary">Total: ₹<span id="total">0</span></div>
-<button onclick="saveBill()">Save Bill</button>
-<button onclick="printReceipt()">Print Bill</button>
-<div class="dashboard">
-<h3>Today's Dashboard</h3>
-<p>Total Sales: ₹<span id="sales">0</span></p>
-<p>Total Orders: <span id="orders">0</span></p>
+
+<button onclick="addItem()">➕ Add Item</button>
 </div>
-<div><h3>Bill History</h3><div id="history"></div></div>
+
+<div class="card">
+<table id="billTable">
+<tr><th>Item</th><th>Qty</th><th>Amt</th><th>Del</th></tr>
+</table>
+
+<h3>Total ₹ <span id="total">0</span></h3>
+
+<input id="discount" type="number" value="0" placeholder="Discount">
+<button onclick="applyDiscount()">Apply Discount</button>
+
+<button onclick="saveBill()">💾 Save Bill</button>
+<button onclick="printBill()">🖨 Print Bill</button>
 </div>
-<div id="printBill" style="display:none"></div>
+
+<div class="card">
+<h3>Today's Saved Bills</h3>
+<div id="history"></div>
+</div>
+
+<div id="receipt"></div>
+</div>
+
 <script>
-let billItems=[],total=0;
+let items=[];
+let total=0;
+
+function updateTotal(){
+ document.getElementById("total").innerText=total;
+}
+
 function addItem(){
-let item=document.getElementById("item"),qty=parseInt(document.getElementById("qty").value);
-let name=item.options[item.selectedIndex].text,rate=parseInt(item.value),amount=rate*qty;
-billItems.push({name,qty,amount}); total+=amount;
-document.getElementById("billBody").innerHTML += `<tr><td>${name}</td><td>${qty}</td><td>₹${amount}</td></tr>`;
-document.getElementById("total").innerText=total;
+ let s=document.getElementById("item");
+ let name=s.options[s.selectedIndex].text;
+ let price=parseInt(s.value);
+ let qty=parseInt(document.getElementById("qty").value)||1;
+ let amt=price*qty;
+
+ let obj={name,qty,amt};
+ items.push(obj);
+
+ let row=document.getElementById("billTable").insertRow(-1);
+ row.insertCell(0).innerText=name;
+ row.insertCell(1).innerText=qty;
+ row.insertCell(2).innerText=amt;
+
+ let d=row.insertCell(3);
+ let btn=document.createElement("button");
+ btn.innerText="X";
+ btn.onclick=function(){
+   total-=amt;
+   row.remove();
+   updateTotal();
+ };
+ d.appendChild(btn);
+
+ total+=amt;
+ updateTotal();
 }
+
+function applyDiscount(){
+ let dis=parseInt(document.getElementById("discount").value)||0;
+ total=Math.max(0,total-dis);
+ updateTotal();
+}
+
 function saveBill(){
-if(total===0){alert("Add items first");return;}
-let customer=document.getElementById("customer").value||"Walk In";
-let bill={id:Date.now(),customer,total,date:new Date().toLocaleString()};
-let bills=JSON.parse(localStorage.getItem("bills"))||[];
-bills.push(bill); localStorage.setItem("bills",JSON.stringify(bills));
-loadDashboard(); loadHistory(); alert("Bill Saved");
-billItems=[]; total=0;
-document.getElementById("billBody").innerHTML="";
-document.getElementById("total").innerText="0";
-document.getElementById("customer").value="";
+ let data=JSON.parse(localStorage.getItem("sjBills")||"[]");
+ data.push({
+   bill:"SJ"+Date.now().toString().slice(-6),
+   total:total,
+   date:new Date().toLocaleString()
+ });
+ localStorage.setItem("sjBills",JSON.stringify(data));
+ loadHistory();
+ alert("Bill Saved");
 }
-function loadDashboard(){
-let bills=JSON.parse(localStorage.getItem("bills"))||[],sales=0;
-bills.forEach(b=>sales+=b.total);
-document.getElementById("sales").innerText=sales;
-document.getElementById("orders").innerText=bills.length;
-}
+
 function loadHistory(){
-let bills=JSON.parse(localStorage.getItem("bills"))||[];
-document.getElementById("history").innerHTML=bills.reverse().map(b=>`<div class="billCard"><b>${b.customer}</b><br>₹${b.total}<br>${b.date}</div>`).join('');
+ let data=JSON.parse(localStorage.getItem("sjBills")||"[]");
+ let h="";
+ data.slice().reverse().forEach(b=>{
+   h+="<div>"+b.bill+" | ₹"+b.total+" | "+b.date+"</div>";
+ });
+ document.getElementById("history").innerHTML=h;
 }
-function printReceipt(){
-let customer=document.getElementById("customer").value||"Walk In";
-let receipt=`<center><b>SHREE JI FAST FOOD</b><br>Customer: ${customer}<br>${new Date().toLocaleString()}<br><hr>`;
-billItems.forEach(i=>receipt+=`${i.name}<br>${i.qty} x = ₹${i.amount}<br>`);
-receipt+=`<hr><b>Total: ₹${total}</b><br>Thank You Visit Again</center>`;
-let div=document.getElementById("printBill");
-div.innerHTML=receipt; div.style.display="block"; window.print(); div.style.display="none";
+
+function printBill(){
+ let billNo="SJ"+Date.now().toString().slice(-6);
+ let customer=document.getElementById("customer").value || "-";
+
+ let r="<h3>SHREE JI FAST FOOD</h3>";
+ r+="Bill No: "+billNo+"<br>";
+ r+="Customer: "+customer+"<br>";
+ r+=new Date().toLocaleString()+"<hr>";
+
+ items.forEach(i=>{
+   r+=i.name+" x"+i.qty+" ₹"+i.amt+"<br>";
+ });
+
+ r+="<hr><b>Total ₹"+total+"</b><hr>";
+ r+="UPI: 6386476348@ybl<br>";
+ r+="Scan & Pay QR (Replace with your QR image later)<br>";
+ r+="Thank You Visit Again";
+
+ document.getElementById("receipt").innerHTML=r;
+ window.print();
 }
-loadDashboard(); loadHistory();
+
+loadHistory();
 </script>
-</body></html>
+</body>
+</html>
