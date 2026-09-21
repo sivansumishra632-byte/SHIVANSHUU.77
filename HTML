@@ -1,159 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SHREE JI FAST FOOD</title>
-
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-body{
-    background:#fff8f0;
-    color:#333;
-}
-
-/* Welcome Screen */
-#welcome{
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    background:linear-gradient(135deg,#ff7b00,#ffb347);
-    color:white;
-}
-
-#welcome h1{
-    font-size:2rem;
-    margin-bottom:10px;
-}
-
-.btn{
-    margin-top:20px;
-    padding:14px 28px;
-    border:none;
-    border-radius:30px;
-    background:white;
-    color:#ff6a00;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-/* Menu */
-#menu{
-    display:none;
-    padding:20px;
-    animation:slideUp 0.8s ease;
-}
-
-@keyframes slideUp{
-    from{
-        opacity:0;
-        transform:translateY(50px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-.header{
-    text-align:center;
-    margin-bottom:20px;
-}
-
-.header h1{
-    color:#ff6a00;
-}
-
-.card{
-    background:white;
-    margin-bottom:15px;
-    padding:15px;
-    border-radius:15px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
-
-.item{
-    display:flex;
-    justify-content:space-between;
-    padding:8px 0;
-    border-bottom:1px dashed #ddd;
-}
-
-.item:last-child{
-    border:none;
-}
-
-.footer{
-    text-align:center;
-    margin-top:20px;
-    color:#666;
-}
+body{margin:0;font-family:Arial;background:#07131f;color:#fff}
+header{background:#0d2233;padding:15px;position:sticky;top:0}
+.logo{font-size:26px;font-weight:bold;color:#ffb74d}
+.search{width:100%;padding:10px;border-radius:10px;border:none;margin-top:10px}
+.banner{margin:10px;background:linear-gradient(45deg,#ff6b00,#ff9800);padding:15px;border-radius:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:12px}
+.card{background:#10283d;border-radius:15px;overflow:hidden}
+.card img{width:100%;height:120px;object-fit:cover}
+.card h3,.card p,.card small{padding:0 10px}
+.btn{background:#ff6b00;color:white;border:none;padding:8px 10px;border-radius:8px;margin:10px}
+.cartbox{background:#10283d;margin:12px;padding:12px;border-radius:12px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#0d2233;display:flex}
+nav div{flex:1;text-align:center;padding:12px}
 </style>
 </head>
-
 <body>
+<header>
+<div class="logo">SHREE JI FAST FOOD</div>
+<div>Mavaiya Chauraha, Near Gurunanak Medical Store, Lucknow</div>
+<input class="search" placeholder="Search food...">
+</header>
 
-<div id="welcome">
-    <h1>🍔 SHREE JI FAST FOOD 🍜</h1>
-    <p>Fresh Taste • Best Quality</p>
-    <button class="btn" onclick="openMenu()">View Menu</button>
+<div class="banner">
+<h2>🎁 10% Discount</h2>
+<p>Instagram Story Tag @shivanshuu_77</p>
 </div>
 
-<div id="menu">
-    <div class="header">
-        <h1>SHREE JI FAST FOOD</h1>
-        <p>Our Menu</p>
-    </div>
+<div class="grid" id="menu"></div>
 
-    <div class="card">
-        <h2>Chinese & Snacks</h2>
-        <div class="item"><span>Chowmein</span><span>₹30 / ₹60</span></div>
-        <div class="item"><span>Fried Rice</span><span>₹30 / ₹60</span></div>
-        <div class="item"><span>French Fries</span><span>₹30 / ₹60</span></div>
-        <div class="item"><span>Momos</span><span>₹30 / ₹60</span></div>
-        <div class="item"><span>Spring Roll</span><span>₹25</span></div>
-    </div>
-
-    <div class="card">
-        <h2>Burgers</h2>
-        <div class="item"><span>Burger</span><span>₹30</span></div>
-        <div class="item"><span>Paneer Burger</span><span>₹50</span></div>
-    </div>
-
-    <div class="card">
-        <h2>South Indian</h2>
-        <div class="item"><span>Dosa</span><span>₹50</span></div>
-        <div class="item"><span>Masala Dosa</span><span>₹70</span></div>
-        <div class="item"><span>Paneer Dosa</span><span>₹90</span></div>
-    </div>
-
-    <div class="card">
-        <h2>Special Items</h2>
-        <div class="item"><span>Pav Bhaji</span><span>₹50</span></div>
-        <div class="item"><span>Chilli Paneer</span><span>₹90 / ₹170</span></div>
-        <div class="item"><span>Chilli Potato</span><span>₹70 / ₹130</span></div>
-    </div>
-
-    <div class="footer">
-        ❤️ Thank You For Visiting
-    </div>
+<div class="cartbox">
+<h3>🛒 Cart</h3>
+<div id="cartItems">No items</div>
+<h3>Total ₹<span id="total">0</span></h3>
+<button class="btn" onclick="orderNow()">WhatsApp Order</button>
 </div>
+
+<div style="height:70px"></div>
+<nav>
+<div>🏠 Home</div><div>🍔 Menu</div><div>🛒 Cart</div><div>👤 Profile</div>
+</nav>
 
 <script>
-function openMenu(){
-    document.getElementById("welcome").style.display="none";
-    document.getElementById("menu").style.display="block";
+const foods=[
+["Chowmein",30,60,"Best with Chilli Potato","https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=600"],
+["Fried Rice",30,60,"Best with Chilli Paneer","https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600"],
+["French Fries",30,60,"Best with Burger","https://images.unsplash.com/photo-1576107232684-1279f390859f?w=600"],
+["Momos",30,60,"Best with Chilli Potato","https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=600"],
+["Spring Roll",25,25,"Best with Sauce","https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600"],
+["Burger",30,30,"Best with Fries","https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"],
+["Paneer Burger",50,50,"Best with Fries","https://images.unsplash.com/photo-1550547660-d9450f859349?w=600"],
+["Dosa",50,50,"Best with Chutney","https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600"],
+["Masala Dosa",70,70,"Best with Sambar","https://images.unsplash.com/photo-1630383249896-424e482df921?w=600"],
+["Paneer Dosa",90,90,"Best with Chutney","https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600"],
+["Pav Bhaji",50,50,"Best with Butter","https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600"],
+["Chilli Paneer",90,170,"Best with Fried Rice","https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600"],
+["Chilli Potato",70,130,"Best with Chowmein","https://images.unsplash.com/photo-1518013431117-eb1465fa5752?w=600"]
+];
+
+let cart={};
+
+foods.forEach(f=>{
+menu.innerHTML += `<div class='card'>
+<img src='${f[4]}'>
+<h3>${f[0]}</h3>
+<p>Half ₹${f[1]} | Full ₹${f[2]}</p>
+<small>💡 ${f[3]}</small><br>
+<button class='btn' onclick="add('${f[0]}',${f[1]})">Add Half</button>
+<button class='btn' onclick="add('${f[0]} Full',${f[2]})">Add Full</button>
+</div>`;
+});
+
+function add(n,p){
+if(!cart[n]) cart[n]={q:0,p:p};
+cart[n].q++;
+render();
+}
+function plus(n){cart[n].q++;render();}
+function minus(n){cart[n].q--; if(cart[n].q<=0) delete cart[n]; render();}
+
+function render(){
+let h="",t=0;
+for(let k in cart){
+t+=cart[k].q*cart[k].p;
+h+=`${k} x ${cart[k].q} ₹${cart[k].q*cart[k].p}
+<button onclick="plus('${k}')">+</button>
+<button onclick="minus('${k}')">-</button><br><br>`;
+}
+document.getElementById("cartItems").innerHTML=h||"No items";
+document.getElementById("total").innerText=t;
+}
+function orderNow(){
+let msg="SHREE JI FAST FOOD Order%0A";
+for(let k in cart){msg+=k+" x "+cart[k].q+"%0A";}
+msg+="Total ₹"+document.getElementById("total").innerText;
+window.open("https://wa.me/916386476348?text="+msg);
 }
 </script>
-
 </body>
 </html>
