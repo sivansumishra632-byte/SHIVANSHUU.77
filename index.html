@@ -57,7 +57,7 @@ input:focus, textarea:focus{border-color:#ff5722}
     <p>Direct Delivery On WhatsApp</p>
   </div>
 
-  <input class="search" id="search" placeholder="🔍 Search dishes (Chowmein, Momos, Burger...)" onkeyup="render()">
+  <input class="search" id="search" placeholder="🔍 Search dishes (Pizza, Burger, Chowmein...)" onkeyup="render()">
   <div id="menu"></div>
 
   <!-- Cart & Checkout Section -->
@@ -85,16 +85,86 @@ input:focus, textarea:focus{border-color:#ff5722}
 const whatsapp = "916386476348";
 
 const menuData = [
-  ["Chowmein (Half)", 30], ["Chowmein (Full)", 60],
-  ["Fried Rice (Half)", 30], ["Fried Rice (Full)", 60],
-  ["French Fries (Half)", 30], ["French Fries (Full)", 60],
-  ["Momos (Half)", 30], ["Momos (Full)", 60],
-  ["Spring Roll", 25], ["Burger", 30],
-  ["Paneer Burger", 50], ["Dosa", 50],
-  ["Masala Dosa", 70], ["Paneer Dosa", 90],
-  ["Pav Bhaji", 50], ["Chilli Paneer (Half)", 90],
-  ["Chilli Paneer (Full)", 170], ["Chilli Potato (Half)", 70],
-  ["Chilli Potato (Full)", 130]
+  // Fast Food & Chinese
+  ["Chowmein (Half)", 30],
+  ["Chowmein (Full)", 60],
+  ["Fried Rice (Half)", 30],
+  ["Fried Rice (Full)", 60],
+  ["French Fries (Half)", 30],
+  ["French Fries (Full)", 60],
+  ["Momos (Half)", 30],
+  ["Momos (Full)", 60],
+  ["Spring Roll", 25],
+  ["Veg Roll", 30],
+  ["Dosa", 50],
+  ["Masala Dosa", 70],
+  ["Paneer Dosa", 90],
+  ["Pav Bhaji", 50],
+  ["Chilli Paneer (Half)", 90],
+  ["Chilli Paneer (Full)", 170],
+  ["Chilli Potato (Half)", 70],
+  ["Chilli Potato (Full)", 130],
+
+  // Burgers & Patties
+  ["Plain Burger", 50],
+  ["Paneer Burger", 60],
+  ["Double Cheese Burger", 80],
+  ["Pizza Patties", 70],
+  ["Pizza Paneer Patties", 80],
+  ["Pizza Patties Special", 100],
+
+  // Pizzas
+  ["Mix Veg Pizza (Small)", 80],
+  ["Mix Veg Pizza (Medium)", 130],
+  ["Mix Veg Pizza (Large)", 240],
+
+  ["Paneer Pizza (Small)", 90],
+  ["Paneer Pizza (Medium)", 160],
+  ["Paneer Pizza (Large)", 270],
+
+  ["Onion Paneer Pizza (Small)", 90],
+  ["Onion Paneer Pizza (Medium)", 160],
+  ["Onion Paneer Pizza (Large)", 270],
+
+  ["Double Cheese Pizza (Small)", 100],
+  ["Double Cheese Pizza (Medium)", 180],
+  ["Double Cheese Pizza (Large)", 290],
+
+  ["Special Pizza (Small)", 110],
+  ["Special Pizza (Medium)", 200],
+  ["Special Pizza (Large)", 310],
+
+  ["Sweet Corn Pizza (Small)", 90],
+  ["Sweet Corn Pizza (Medium)", 150],
+  ["Sweet Corn Pizza (Large)", 260],
+
+  ["Onion Pizza (Small)", 80],
+  ["Onion Pizza (Medium)", 130],
+  ["Onion Pizza (Large)", 240],
+
+  ["Tomato Pizza (Small)", 80],
+  ["Tomato Pizza (Medium)", 130],
+  ["Tomato Pizza (Large)", 240],
+
+  ["Capsicum Pizza (Small)", 80],
+  ["Capsicum Pizza (Medium)", 130],
+  ["Capsicum Pizza (Large)", 240],
+
+  ["Plain Cheese Pizza (Small)", 80],
+  ["Plain Cheese Pizza (Medium)", 150],
+  ["Plain Cheese Pizza (Large)", 260],
+
+  ["Black Olives Pizza (Small)", 90],
+  ["Black Olives Pizza (Medium)", 150],
+  ["Black Olives Pizza (Large)", 260],
+
+  ["Red Chilli Pizza (Small)", 90],
+  ["Red Chilli Pizza (Medium)", 150],
+  ["Red Chilli Pizza (Large)", 260],
+
+  ["Green Olives Pizza (Small)", 90],
+  ["Green Olives Pizza (Medium)", 150],
+  ["Green Olives Pizza (Large)", 260]
 ];
 
 let cart = [];
@@ -146,7 +216,7 @@ function render(){
               <button onclick="change('${name}', 1)">+</button>
             </div>
           ` : `
-            <button class='btn' onclick="add('${name}', ${price})">+ Add</button>
+            <button class='btn' onclick="add('${name}',${price})">+ Add</button>
           `}
         </div>
       </div>
