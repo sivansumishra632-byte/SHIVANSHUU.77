@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="hi">
+<a href="data:text/html;charset=utf-8,<!DOCTYPE html>
+<html lang='hi'>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
 <title>SHREE JI FAST FOOD - Online Order</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
@@ -39,136 +39,76 @@ input:focus, textarea:focus{border-color:#ff5722}
 </head>
 <body>
 
-<div class="badge">🛒 <span id="count">0</span></div>
+<div class='badge'>🛒 <span id='count'>0</span></div>
 
-<!-- Welcome Hero Screen -->
-<div class="hero" id="welcome">
+<div class='hero' id='welcome'>
   <div>
     <h1>🍔 SHREE JI FAST FOOD</h1>
     <p>Fresh Taste • Best Quality • Fast Delivery</p>
-    <button onclick="startApp()">VIEW MENU & ORDER</button>
+    <button onclick='startApp()'>VIEW MENU & ORDER</button>
   </div>
 </div>
 
-<!-- Main App Screen -->
-<div id="app">
-  <div class="header">
+<div id='app'>
+  <div class='header'>
     <h2>SHREE JI FAST FOOD</h2>
     <p>Direct Delivery On WhatsApp</p>
   </div>
 
-  <input class="search" id="search" placeholder="🔍 Search dishes (Pizza, Burger, Chowmein...)" onkeyup="render()">
-  <div id="menu"></div>
+  <input class='search' id='search' placeholder='🔍 Search dishes (Pizza, Burger, Chowmein...)' onkeyup='render()'>
+  <div id='menu'></div>
 
-  <!-- Cart & Checkout Section -->
-  <div class="cart">
+  <div class='cart'>
     <h3>🛍️ Your Cart</h3>
-    <div id="cartItems">No items added yet</div>
-    <h2 id="total">Total: ₹0</h2>
+    <div id='cartItems'>No items added yet</div>
+    <h2 id='total'>Total: ₹0</h2>
 
-    <input id="name" placeholder="👤 Customer Name">
-    <input id="phone" type="tel" placeholder="📞 Mobile Number">
+    <input id='name' placeholder='👤 Customer Name'>
+    <input id='phone' type='tel' placeholder='📞 Mobile Number'>
     
-    <!-- Delivery Address & Live Location -->
-    <textarea id="address" rows="2" placeholder="🏠 Enter House No., Street, Landmark"></textarea>
+    <textarea id='address' rows='2' placeholder='🏠 Enter House No., Street, Landmark'></textarea>
     
-    <button type="button" class="loc-btn" onclick="fetchLiveLocation()">
+    <button type='button' class='loc-btn' onclick='fetchLiveLocation()'>
       📍 Send Current GPS Location
     </button>
-    <small id="loc-status" style="display:block;margin-top:5px;color:#666;font-size:12px"></small>
+    <small id='loc-status' style='display:block;margin-top:5px;color:#666;font-size:12px'></small>
 
-    <button class="order" onclick="sendOrder()">📲 Confirm & Order On WhatsApp</button>
+    <button class='order' onclick='sendOrder()'>📲 Confirm & Order On WhatsApp</button>
   </div>
 </div>
 
 <script>
-const whatsapp = "916386476348";
+const whatsapp = '916386476348';
 
 const menuData = [
-  // Fast Food & Chinese
-  ["Chowmein (Half)", 30],
-  ["Chowmein (Full)", 60],
-  ["Fried Rice (Half)", 30],
-  ["Fried Rice (Full)", 60],
-  ["French Fries (Half)", 30],
-  ["French Fries (Full)", 60],
-  ["Momos (Half)", 30],
-  ["Momos (Full)", 60],
-  ["Spring Roll", 25],
-  ["Veg Roll", 30],
-  ["Dosa", 50],
-  ["Masala Dosa", 70],
-  ["Paneer Dosa", 90],
-  ["Pav Bhaji", 50],
-  ["Chilli Paneer (Half)", 90],
-  ["Chilli Paneer (Full)", 170],
-  ["Chilli Potato (Half)", 70],
-  ["Chilli Potato (Full)", 130],
-
-  // Burgers & Patties
-  ["Plain Burger", 50],
-  ["Paneer Burger", 60],
-  ["Double Cheese Burger", 80],
-  ["Pizza Patties", 70],
-  ["Pizza Paneer Patties", 80],
-  ["Pizza Patties Special", 100],
-
-  // Pizzas
-  ["Mix Veg Pizza (Small)", 80],
-  ["Mix Veg Pizza (Medium)", 130],
-  ["Mix Veg Pizza (Large)", 240],
-
-  ["Paneer Pizza (Small)", 90],
-  ["Paneer Pizza (Medium)", 160],
-  ["Paneer Pizza (Large)", 270],
-
-  ["Onion Paneer Pizza (Small)", 90],
-  ["Onion Paneer Pizza (Medium)", 160],
-  ["Onion Paneer Pizza (Large)", 270],
-
-  ["Double Cheese Pizza (Small)", 100],
-  ["Double Cheese Pizza (Medium)", 180],
-  ["Double Cheese Pizza (Large)", 290],
-
-  ["Special Pizza (Small)", 110],
-  ["Special Pizza (Medium)", 200],
-  ["Special Pizza (Large)", 310],
-
-  ["Sweet Corn Pizza (Small)", 90],
-  ["Sweet Corn Pizza (Medium)", 150],
-  ["Sweet Corn Pizza (Large)", 260],
-
-  ["Onion Pizza (Small)", 80],
-  ["Onion Pizza (Medium)", 130],
-  ["Onion Pizza (Large)", 240],
-
-  ["Tomato Pizza (Small)", 80],
-  ["Tomato Pizza (Medium)", 130],
-  ["Tomato Pizza (Large)", 240],
-
-  ["Capsicum Pizza (Small)", 80],
-  ["Capsicum Pizza (Medium)", 130],
-  ["Capsicum Pizza (Large)", 240],
-
-  ["Plain Cheese Pizza (Small)", 80],
-  ["Plain Cheese Pizza (Medium)", 150],
-  ["Plain Cheese Pizza (Large)", 260],
-
-  ["Black Olives Pizza (Small)", 90],
-  ["Black Olives Pizza (Medium)", 150],
-  ["Black Olives Pizza (Large)", 260],
-
-  ["Red Chilli Pizza (Small)", 90],
-  ["Red Chilli Pizza (Medium)", 150],
-  ["Red Chilli Pizza (Large)", 260],
-
-  ["Green Olives Pizza (Small)", 90],
-  ["Green Olives Pizza (Medium)", 150],
-  ["Green Olives Pizza (Large)", 260]
+  ['Chowmein (Half)', 30], ['Chowmein (Full)', 60],
+  ['Fried Rice (Half)', 30], ['Fried Rice (Full)', 60],
+  ['French Fries (Half)', 30], ['French Fries (Full)', 60],
+  ['Momos (Half)', 30], ['Momos (Full)', 60],
+  ['Spring Roll', 25], ['Veg Roll', 30],
+  ['Dosa', 50], ['Masala Dosa', 70], ['Paneer Dosa', 90],
+  ['Pav Bhaji', 50],
+  ['Chilli Paneer (Half)', 90], ['Chilli Paneer (Full)', 170],
+  ['Chilli Potato (Half)', 70], ['Chilli Potato (Full)', 130],
+  ['Plain Burger', 50], ['Paneer Burger', 60], ['Double Cheese Burger', 80],
+  ['Pizza Patties', 70], ['Pizza Paneer Patties', 80], ['Pizza Patties Special', 100],
+  ['Mix Veg Pizza (Small)', 80], ['Mix Veg Pizza (Medium)', 130], ['Mix Veg Pizza (Large)', 240],
+  ['Paneer Pizza (Small)', 90], ['Paneer Pizza (Medium)', 160], ['Paneer Pizza (Large)', 270],
+  ['Onion Paneer Pizza (Small)', 90], ['Onion Paneer Pizza (Medium)', 160], ['Onion Paneer Pizza (Large)', 270],
+  ['Double Cheese Pizza (Small)', 100], ['Double Cheese Pizza (Medium)', 180], ['Double Cheese Pizza (Large)', 290],
+  ['Special Pizza (Small)', 110], ['Special Pizza (Medium)', 200], ['Special Pizza (Large)', 310],
+  ['Sweet Corn Pizza (Small)', 90], ['Sweet Corn Pizza (Medium)', 150], ['Sweet Corn Pizza (Large)', 260],
+  ['Onion Pizza (Small)', 80], ['Onion Pizza (Medium)', 130], ['Onion Pizza (Large)', 240],
+  ['Tomato Pizza (Small)', 80], ['Tomato Pizza (Medium)', 130], ['Tomato Pizza (Large)', 240],
+  ['Capsicum Pizza (Small)', 80], ['Capsicum Pizza (Medium)', 130], ['Capsicum Pizza (Large)', 240],
+  ['Plain Cheese Pizza (Small)', 80], ['Plain Cheese Pizza (Medium)', 150], ['Plain Cheese Pizza (Large)', 260],
+  ['Black Olives Pizza (Small)', 90], ['Black Olives Pizza (Medium)', 150], ['Black Olives Pizza (Large)', 260],
+  ['Red Chilli Pizza (Small)', 90], ['Red Chilli Pizza (Medium)', 150], ['Red Chilli Pizza (Large)', 260],
+  ['Green Olives Pizza (Small)', 90], ['Green Olives Pizza (Medium)', 150], ['Green Olives Pizza (Large)', 260]
 ];
 
 let cart = [];
-let googleMapsUrl = "";
+let googleMapsUrl = '';
 
 function startApp(){
   document.getElementById('welcome').style.display = 'none';
@@ -196,27 +136,27 @@ function change(name, val){
 }
 
 function render(){
-  let q = document.getElementById('search').value?.toLowerCase() || "";
+  let q = document.getElementById('search').value?.toLowerCase() || '';
   let menuBox = document.getElementById('menu');
-  menuBox.innerHTML = "";
+  menuBox.innerHTML = '';
   
   menuData.filter(i => i[0].toLowerCase().includes(q)).forEach(i => {
     let name = i[0], price = i[1], c = qty(name);
     menuBox.innerHTML += `
-      <div class="card">
+      <div class='card'>
         <div>
           <b>${name}</b>
-          <div class="price">₹${price}</div>
+          <div class='price'>₹${price}</div>
         </div>
         <div>
           ${c ? `
             <div class='qty'>
-              <button onclick="change('${name}', -1)">-</button>
+              <button onclick=\"change('${name}', -1)\">-</button>
               <b>${c}</b>
-              <button onclick="change('${name}', 1)">+</button>
+              <button onclick=\"change('${name}', 1)\">+</button>
             </div>
           ` : `
-            <button class='btn' onclick="add('${name}',${price})">+ Add</button>
+            <button class='btn' onclick=\"add('${name}',${price})\">+ Add</button>
           `}
         </div>
       </div>
@@ -226,7 +166,7 @@ function render(){
 
 function update(){
   render();
-  let total = 0, count = 0, html = "";
+  let total = 0, count = 0, html = '';
   cart.forEach(i => {
     let sub = i.price * i.qty;
     total += sub;
@@ -234,8 +174,8 @@ function update(){
     html += `• ${i.name} x ${i.qty} = ₹${sub}<br>`;
   });
 
-  document.getElementById('cartItems').innerHTML = html || "No items added yet";
-  document.getElementById('total').innerText = "Total: ₹" + total;
+  document.getElementById('cartItems').innerHTML = html || 'No items added yet';
+  document.getElementById('total').innerText = 'Total: ₹' + total;
   document.getElementById('count').innerText = count;
 
   let badge = document.querySelector('.badge');
@@ -243,38 +183,36 @@ function update(){
   setTimeout(() => badge.classList.remove('pop'), 300);
 }
 
-// Live GPS Location
 function fetchLiveLocation(){
   let status = document.getElementById('loc-status');
   if(!navigator.geolocation){
-    alert("आपके ब्राउज़र में GPS सपोर्ट नहीं है। कृपया पता मैन्युअली लिखें।");
+    alert('आपके ब्राउज़र में GPS सपोर्ट नहीं है।');
     return;
   }
-  status.innerText = "⏳ लोकेशन खोजी जा रही है, कृपया प्रतीक्षा करें...";
+  status.innerText = '⏳ लोकेशन खोजी जा रही है...';
   navigator.geolocation.getCurrentPosition(
     (pos) => {
       let lat = pos.coords.latitude;
       let lon = pos.coords.longitude;
       googleMapsUrl = `https://maps.google.com/?q=${lat},${lon}`;
-      status.innerText = "✅ लोकेशन सफलतापूर्वक प्राप्त हुई!";
-      status.style.color = "green";
+      status.innerText = '✅ लोकेशन प्राप्त हुई!';
+      status.style.color = 'green';
       let addrBox = document.getElementById('address');
       if(!addrBox.value.trim()){
-        addrBox.value = "GPS Location Attached";
+        addrBox.value = 'GPS Location Attached';
       }
     },
     (err) => {
-      status.innerText = "⚠️ लोकेशन नहीं मिल सकी। कृपया मैन्युअल पता टाइप करें।";
-      status.style.color = "red";
+      status.innerText = '⚠️ लोकेशन नहीं मिल सकी।';
+      status.style.color = 'red';
     },
     { enableHighAccuracy: true, timeout: 10000 }
   );
 }
 
-// Order through WhatsApp
 function sendOrder(){
   if(!cart.length){
-    alert('कृपया पहले मेनू से कोई आइटम कार्ट में जोड़ें!');
+    alert('कृपया पहले कोई आइटम कार्ट में जोड़ें!');
     return;
   }
   let custName = document.getElementById('name').value.trim();
@@ -307,4 +245,4 @@ function sendOrder(){
 }
 </script>
 </body>
-</html>
+</html>" download="index.html" style="display:inline-block;padding:12px 24px;background:#25D366;color:#fff;text-decoration:none;border-radius:8px;font-weight:bold;margin:10px 0;">📥 Download index.html</a>
